@@ -1,0 +1,33 @@
+//
+//  PrefixHeader.pch
+//  CoreImageDemo
+//
+//  Created by landixing on 2017/4/13.
+//  Copyright © 2017年 WJQ. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <Masonry.h>
+
+#import <CoreImage/CoreImage.h>
+#import "PhotoFilterTool.h"
+#import "FilterScrollView.h"
+#import "UIImageView+FilterImage.h"
+
+
+#import "SliderView.h"
+
+
+
+#define scrollHeight 80
+#define BtnHeight  scrollHeight/3*2
+#define WS(weakSelf)   __weak __typeof(&*self)weakSelf = self;
+
+
+
+#endif /* PrefixHeader_pch */
