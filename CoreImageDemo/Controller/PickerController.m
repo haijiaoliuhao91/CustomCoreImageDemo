@@ -34,54 +34,43 @@
 - (CustomSliderView *)sliderView{
     if (!_sliderView) {
         _sliderView = [[CustomSliderView alloc]init];
+        WS(weakSelf);
+        //饱和度
+        _sliderView.firstblock = ^(float firstValue) {
+            [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:firstValue] forKey:@"inputSaturation"];//设置滤镜参数
+            [weakSelf setImage];
+        };
+        //亮度
+        _sliderView.secondblock = ^(float secondValue) {
+            [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:secondValue] forKey:@"inputBrightness"];
+            [weakSelf setImage];
+        };
+        //对比度
+        _sliderView.thirdlock = ^(float thirdValue) {
+            [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:thirdValue] forKey:@"inputContrast"];
+            [weakSelf setImage];
+        };
 
     }
     return _sliderView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"相册1";
     [self.view addSubview:self.sliderView];    
     
-
-    
-    
-    
-    WS(weakSelf);
-    //饱和度
-    _sliderView.firstblock = ^(float firstValue) {
-        [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:firstValue] forKey:@"inputSaturation"];//设置滤镜参数
-        [weakSelf setImage];
-    };
-    //亮度
-    _sliderView.secondblock = ^(float secondValue) {
-        [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:secondValue] forKey:@"inputBrightness"];
-        [weakSelf setImage];
-    };
-    //对比度
-    _sliderView.thirdlock = ^(float thirdValue) {
-        [weakSelf.colorControlsFilter setValue:[NSNumber numberWithFloat:thirdValue] forKey:@"inputContrast"];
-        [weakSelf setImage];
-    };
-
-    
-    [self.editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    [self.editorBtn setTitle:@"取消" forState:UIControlStateSelected];
-    self.editorBtn.hidden = YES;
-
-    
-    
+    /*create pickerController */
     _pickerControll = [[UIImagePickerController alloc]init];
     _pickerControll.delegate = self;
     
-    //上方导航按钮
-    self.navigationItem.title=@"Enhance";
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Open" style:UIBarButtonItemStyleDone target:self action:@selector(openPhoto:)];
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(savePhoto:)];
+    
+    
+    [self setupEditBtn];
+    [self setupNavi];
 
     
     
-    //初始化CIContext
-    
+    /*初始化CIContext*/
     _context=[CIContext contextWithOptions:nil];//使用GPU渲染，推荐,但注意GPU的CIContext无法跨应用访问，例如直接在UIImagePickerController的完成方法中调用上下文处理就会自动降级为CPU渲染，所以推荐现在完成方法中保存图像，然后在主程序中调用
 //        EAGLContext *eaglContext=[[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES1];
 //        _context=[CIContext contextWithEAGLContext:eaglContext];//OpenGL优化过的图像上下文
@@ -90,6 +79,21 @@
     _colorControlsFilter=[CIFilter filterWithName:@"CIColorControls"];
 
 
+}
+
+- (void)setupEditBtn
+{
+    [self.editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [self.editorBtn setTitle:@"取消" forState:UIControlStateSelected];
+    self.editorBtn.hidden = YES;
+    
+}
+
+- (void)setupNavi{
+    //上方导航按钮
+    self.navigationItem.title=@"Enhance";
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Open" style:UIBarButtonItemStyleDone target:self action:@selector(openPhoto:)];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(savePhoto:)];
 }
 
 

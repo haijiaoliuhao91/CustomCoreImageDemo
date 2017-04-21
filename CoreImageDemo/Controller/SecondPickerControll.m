@@ -38,35 +38,25 @@
     if (!_filterScroll) {
         _filterScroll = [[FilterScrollView alloc]init];
         _filterScroll.backgroundColor = [UIColor whiteColor];
-        
-        
     }
     return _filterScroll;
 }
 
 
-- (void)showFilterName{
-    NSArray * filterNames = [CIFilter filterNamesInCategory:kCICategoryColorEffect];
-    for (NSString * filterName in filterNames) {
-        NSLog(@"%@",[CIFilter filterWithName:filterName].attributes);
-    }
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self showFilterName];
     self.filterScroll.filterNameArr = [NSMutableArray arrayWithObjects:@"铬黄",@"褪色",@"怀旧",@"单色",@"黑白",@"冲印",@"色调",@"岁月",@"RGB",@"RGBLinear",@"打磨",@"重影",@"Clamp",@"Vignette",nil];
     
-    self.editBtn.hidden = YES;
     
+    //create pickerControll
     _pickerControll = [[UIImagePickerController alloc]init];
     _pickerControll.delegate = self;
     
-    //上方导航按钮
-    self.navigationItem.title=@"Enhance";
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Open" style:UIBarButtonItemStyleDone target:self action:@selector(openPhoto:)];
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(savePhoto:)];
+    [self setupEditBtn];
+    [self setupNavi];
+   
     WS(weakSelf);
     self.filterScroll.btnBlock = ^(NSInteger tag) {
         switch (tag) {
@@ -164,8 +154,7 @@
         }
         
     };
-    //    self.filterlessImage = [UIImage imageNamed:@"ivy_chen"];
-    //    self.showImageView.image = self.filterlessImage;
+   
     
     
 }
@@ -173,8 +162,20 @@
 //@"CIToneCurve"
 //"CIColorClamp"
 
+- (void)setupEditBtn
+{
+    [self.editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [self.editBtn setTitle:@"取消" forState:UIControlStateSelected];
+    self.editBtn.hidden = YES;
 
+}
 
+- (void)setupNavi{
+    //上方导航按钮
+    self.navigationItem.title=@"Enhance";
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Open" style:UIBarButtonItemStyleDone target:self action:@selector(openPhoto:)];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(savePhoto:)];
+}
 
 
 #pragma mark 打开图片选择器
@@ -213,13 +214,11 @@
     
     if (sender.selected) {
         sender.selected = NO;
-        [sender setTitle:@"编辑" forState:UIControlStateNormal];
         self.showImageView.image = self.filterlessImage;
         [_filterScroll cancelView];
         
     }else{
         sender.selected = YES;
-        [sender setTitle:@"取消" forState:UIControlStateSelected];
         [self.view addSubview:self.filterScroll];
         WS(weakSelf);
         [_filterScroll mas_makeConstraints:^(MASConstraintMaker *make) {
