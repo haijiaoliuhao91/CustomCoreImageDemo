@@ -13,8 +13,9 @@
 
 @interface PhotoFilterTool ()
 {
-    CIContext * context;
+    CIContext * context; // CPU渲染
     CIImage * cimage;
+    EAGLContext  * glcontext; //OpenGL context, GPU渲染}
 }
 
 @end
@@ -28,6 +29,19 @@
         filterTool = [[PhotoFilterTool alloc]init];
     });
     return filterTool;
+}
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        glcontext = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        if (!glcontext) {
+            NSLog(@"Failed to create ES context");
+
+        }
+        context = [CIContext contextWithEAGLContext:glcontext];
+    }
+    return self;
 }
 
 - (UIImage * )outputImageWithFilterName:(NSString *)filterName inputImage:(UIImage *)inputImage{
@@ -43,7 +57,8 @@
     CIImage * outputImage = [self.filter outputImage];
     
     //绘制上下文
-    context = [CIContext contextWithOptions:nil];
+    //如果想用CPU，则可以调用[CIContext contextWithOptions:]传入一个字典，将CPU作为渲染键值
+    //    context = [CIContext contextWithOptions:nil];
     
     //创建CGImageRef
     CGImageRef imageRef = [context createCGImage:outputImage fromRect:outputImage.extent];
@@ -82,8 +97,8 @@
     //4. 渲染输出
     CIImage * outputImage = [self.filter outputImage];
     
-    //5. 绘制上下文
-    context = [CIContext contextWithOptions:nil];
+//    //5. 绘制上下文
+//    context = [CIContext contextWithOptions:nil];
     
     //6. 创建输出
     CGImageRef imageRef = [context createCGImage:outputImage fromRect:outputImage.extent];

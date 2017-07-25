@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Beg-Hf-9lm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Beg-Hf-9lm">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -118,11 +118,11 @@
             </objects>
             <point key="canvasLocation" x="1287" y="1069"/>
         </scene>
-        <!--相册1-->
+        <!--参数可设置-->
         <scene sceneID="hOc-7y-pjy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Oj2-sD-lhl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="相册1" image="normal1" selectedImage="selected1" id="I7K-1h-pr9"/>
+                    <tabBarItem key="tabBarItem" title="参数可设置" image="normal1" selectedImage="selected1" id="I7K-1h-pr9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="I1Z-ch-0mt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -183,11 +183,11 @@
             </objects>
             <point key="canvasLocation" x="1506" y="1368"/>
         </scene>
-        <!--相册2-->
+        <!--照片滤镜-->
         <scene sceneID="9iv-Hx-Qcs">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hqy-OB-w3B" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="相册2" image="normal1" selectedImage="selected1" id="0nQ-Ng-8Rb"/>
+                    <tabBarItem key="tabBarItem" title="照片滤镜" image="normal1" selectedImage="selected1" id="0nQ-Ng-8Rb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="p5v-6Q-B7N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
